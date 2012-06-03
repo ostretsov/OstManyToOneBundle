@@ -1,0 +1,83 @@
+{% block object_many_to_one_selector_widget %}
+    {% set attr = { 'style': 'display:none;' } %}
+    {{ block('field_widget') }}
+    <p>
+        <span class="manyToOne-title" id="manyToOne-description-{{ id }}" style="font-weight: bold;">{{ entity }}</span> <a href="#getTable" class="manyToOne-selectLink">{% trans %}Select{% endtrans %}</a>
+    </p>
+    <div class="well well-small manyToOne-tableWell" id="manyToOne-well-{{ id }}" style="display: none"></div>
+
+    <script type="text/javascript">
+        $(document).on('click', '.manyToOne-selectLink', function(){
+            var link = $(this);
+
+            $('#manyToOne-well-{{ id }}').html('<img src="/bundles/ostmanytoone/images/ajax-loader.gif">');
+            $('#manyToOne-well-{{ id }}').show();
+
+            $.ajax({
+                url: "{{ path('ost_manyToOne_getTable') }}",
+                cache: false,
+                data: { 'formClass': '{{ form_class }}', 'formItem': '{{ name }}' }
+            }).done(function(html){
+                $('#manyToOne-well-{{ id }}').html(html);
+            });
+
+            return false;
+        });
+
+        $(document).on('click', '.manyToOne-tableWell tr', function(){
+            var itemId = $(this).attr('itemId');
+            $('#manyToOne-description-{{ id }}').html('<img src="/bundles/ostmanytoone/images/ajax-loader.gif">');
+            $(this).closest('.well').hide();
+            $(this).closest('table').remove();
+            $('#{{ id }}').attr('value', itemId);
+
+            $.ajax({
+                url: "{{ path('ost_manyToOne_toString') }}",
+                cache: false,
+                data: { itemId: itemId, 'formClass': '{{ form_class }}', 'formItem': '{{ name }}' }
+            }).done(function(html){
+                $('#manyToOne-description-{{ id }}').text(html);
+            });
+        });
+
+        $(document).on('click', '#manyToOne-well-{{ id }} .pager a', function(){
+            var href = $(this).attr('href');
+            $(this).replaceWith('<img src="/bundles/ostmanytoone/images/ajax-loader.gif">');
+
+            $.ajax({
+                url: href,
+                cache: false,
+                data: { 'formClass': '{{ form_class }}', 'formItem': '{{ name }}' }
+            }).done(function(html){
+                $('#manyToOne-well-{{ id }}').html(html);
+            });
+
+            return false;
+        });
+
+        function searchQuery{{ id }}(query){
+            $.ajax({
+                url: "{{ path('ost_manyToOne_getTable') }}",
+                cache: false,
+                data: { 'query': query, 'formClass': '{{ form_class }}', 'formItem': '{{ name }}' }
+            }).done(function(html){
+                $('#manyToOne-well-{{ id }}').html(html);
+            });
+        }
+
+        $(document).on('click', '#manyToOne-well-{{ id }} .form-search button', function(){
+            var query = $(this).prev().val();
+
+            searchQuery{{ id }}(query);
+        });
+
+        $(document).on('keypress', '#manyToOne-well-{{ id }} .form-search input', function(e){
+            var query = $(this).val();
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if (code == 13){
+                searchQuery{{ id }}(query);
+                e.preventDefault();
+            }
+        });
+    </script>
+{% endblock %}

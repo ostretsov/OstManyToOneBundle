@@ -1,0 +1,12 @@
+<p>
+    <div class="form-search well well-small">
+        <div><label for="morphosearch-input">{% trans %}Search query{% endtrans %}</label></div>
+        <input type="text" class="input-medium search-query span6" value="{{ query }}">
+        <button type="button" class="btn" id="morphosearch-input-button">{% trans %}Search{% endtrans %}</button>
+</div>
+</p>
+{% include list_template %}
+
+{% if pager.isPaginable %}
+{{ paginate(pager, 'ost_manyToOne_getTable', { 'query': query }) }}
+{% endif %}
