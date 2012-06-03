@@ -26,6 +26,7 @@ Installation
 ```
 	php bin/vendors install
 ```
+
 Usage
 -----
 
