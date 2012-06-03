@@ -4,58 +4,51 @@ OstManyToOneBundle - Many to One relation form widget
 Installation
 ------------
 
-Add lines in deps file:
-``` txt
-[PagerBundle]
-    git=https://github.com/makerlabs/PagerBundle.git
-    target=/bundles/MakerLabs/PagerBundle
+* Add lines in deps file:
+	[PagerBundle]
+	    git=https://github.com/makerlabs/PagerBundle.git
+	    target=/bundles/MakerLabs/PagerBundle
 
-[OstManyToOneBundle]
-    git=https://ruFog@github.com/ruFog/OstManyToOneBundle.git
-    target=/bundles/Ost/ManyToOneBundle
-```
+	[OstManyToOneBundle]
+	    git=https://ruFog@github.com/ruFog/OstManyToOneBundle.git
+	    target=/bundles/Ost/ManyToOneBundle
 
-Add object init in AppKernel.php:
-``` php
-new \Ost\ManyToOneBundle\OstManyToOneBundle(),
-```
+* Add object init in AppKernel.php:
+	new \Ost\ManyToOneBundle\OstManyToOneBundle(),
 
-Add autoload.php:
-``` php
-'Ost'        => __DIR__.'/../vendor/bundles',
-```
+* Add autoload.php:
+	'Ost' => __DIR__.'/../vendor/bundles',
 
-And run:
-``` sh
-php bin/vendors install
-```
+
+* And run:
+	php bin/vendors install
 
 Usage
 -----
 
 In buildForm function:
 ``` php
-            ->add('requestedBy', 'object_many_to_one_selector', array(
-                'form_class' => addslashes(__CLASS__),
-                'label' => 'Requested By',
-                'entity' => 'OstUserBundle:User',
-                'list_template' => 'OstUserBundle:User:many_to_one_list.html.twig',
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->where('u.roles not like :role_manager')
-                        ->andWhere('u.roles not like :role_admin')
-                        ->setParameter('role_manager', '%MANAGER%')
-                        ->setParameter('role_admin', '%SUPER%')
-                        ->orderBy('u.username', 'ASC')
-                    ;
-                },
-                'query_builder_search' => function(QueryBuilder $qb, $query){
-                    return $qb->andWhere('u.username like :query')
-                        ->setParameter('query', '%'.$query.'%')
-                    ;
-                },
-                'items_per_page' => 5
-            ))
+->add('requestedBy', 'object_many_to_one_selector', array(
+	'form_class' => addslashes(__CLASS__),
+        'label' => 'Requested By',
+        'entity' => 'OstUserBundle:User',
+        'list_template' => 'OstUserBundle:User:many_to_one_list.html.twig',
+        'query_builder' => function(EntityRepository $er) {
+        	return $er->createQueryBuilder('u')
+                    ->where('u.roles not like :role_manager')
+                    ->andWhere('u.roles not like :role_admin')
+                    ->setParameter('role_manager', '%MANAGER%')
+                    ->setParameter('role_admin', '%SUPER%')
+                    ->orderBy('u.username', 'ASC')
+                ;
+        },
+        'query_builder_search' => function(QueryBuilder $qb, $query){
+                return $qb->andWhere('u.username like :query')
+                    ->setParameter('query', '%'.$query.'%')
+                ;
+        },
+        'items_per_page' => 5
+))
 ```
 
 many_to_one_list.html.twig example:
