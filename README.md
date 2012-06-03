@@ -5,6 +5,7 @@ Installation
 ------------
 
 * Add lines in deps file:
+
 	[PagerBundle]
 	    git=https://github.com/makerlabs/PagerBundle.git
 	    target=/bundles/MakerLabs/PagerBundle
@@ -14,13 +15,16 @@ Installation
 	    target=/bundles/Ost/ManyToOneBundle
 
 * Add object init in AppKernel.php:
+
 	new \Ost\ManyToOneBundle\OstManyToOneBundle(),
 
 * Add autoload.php:
+
 	'Ost' => __DIR__.'/../vendor/bundles',
 
 
 * And run:
+
 	php bin/vendors install
 
 Usage
