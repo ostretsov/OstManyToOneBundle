@@ -1,7 +1,7 @@
 {
-    "name": "manytoone/manytoone",
+    "name": "ostmanytoone/ostmanytoone",
     "description": "Easy for use ManyToOne bundle",
-    "keywords": ["manytoone","many to one", "doctrine relation"],
+    "keywords": ["ostmanytoone","many to one", "doctrine relation"],
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -17,6 +17,6 @@
         "doctrine/orm": "2.*"
     },
     "autoload": {
-        "psr-0": { "Manytoone\\": "src/" }
+        "psr-0": { "ostmanytoone\\": "src/" }
     }
 }
