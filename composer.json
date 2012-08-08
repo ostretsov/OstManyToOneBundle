@@ -1,0 +1,22 @@
+{
+    "name": "manytoone/manytoone",
+    "description": "Easy for use ManyToOne bundle",
+    "keywords": ["manytoone","many to one", "doctrine relation"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Artem Ostretsov",
+            "email": "artem@ostretsov.ru"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "suggest": {
+        "doctrine/orm": "2.*"
+    },
+    "autoload": {
+        "psr-0": { "Manytoone\\": "src/" }
+    }
+}
